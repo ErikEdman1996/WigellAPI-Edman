@@ -1,6 +1,7 @@
 package com.example.WigellAPIDemo.services;
 
 import com.example.WigellAPIDemo.entities.Member;
+import com.example.WigellAPIDemo.exceptions.ResourceNotFoundException;
 import com.example.WigellAPIDemo.repositories.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class MemberService implements MemberServiceInterface
             return member.get();
         }
 
-        return null;
+        throw new ResourceNotFoundException("Member", "id", id);
     }
 
     @Override
@@ -47,7 +48,7 @@ public class MemberService implements MemberServiceInterface
             return memberRepository.save(member);
         }
 
-        return null;
+        throw new ResourceNotFoundException("Member", "id", member.getId());
     }
 
     @Override
@@ -67,6 +68,7 @@ public class MemberService implements MemberServiceInterface
         else
         {
             System.out.println("Member with id " + id + " not found");
+            throw new ResourceNotFoundException("Member", "id", id);
         }
     }
 }
